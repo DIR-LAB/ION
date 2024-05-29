@@ -130,3 +130,258 @@ MODULE_MAP = {
     "Non-Collective I/O": ['DXT', 'MPI-IO'],
     "Low Level Library Usage": ['POSIX', 'MPI-IO', 'STDIO', 'H5F']
 }
+
+
+###################################################################################################
+#Darshan module descriptions.
+###################################################################################################
+DARSHAN_MODULES = {
+    "POSIX": {
+        "column_description": {
+            "module": "module responsible for this I/O record.",
+            "rank": "MPI rank. -1 indicates that the file is shared across all processes and statistics are aggregated.",
+            "record id": "hash of the record's file path",
+            "file name": "full file path for the record.",
+            "mount pt": "mount point that the file resides on.",
+            "fs type": "type of file system that the file resides on.",
+            "POSIX_*": "POSIX operation counters. Possible operations include: READS, WRITES, OPENS, SEEKS, STATS, MMAPS, SYNCS, FILENOS, DUPS",
+            "POSIX_RENAME_SOURCES/TARGETS": "total count file was source or target of a rename operation",
+            "POSIX_RENAMED_FROM": "Darshan record ID of the first rename source, if file was a rename target",
+            "POSIX_MODE": "mode that file was opened in.",
+            "POSIX_BYTES_*": "total bytes read or written.",
+            "POSIX_MAX_BYTE_*": "highest offset byte read or written.",
+            "POSIX_CONSEC_*": "number of exactly adjacent reads and writes.",
+            "POSIX_SEQ_*": "number of reads and writes from increasing offsets.",
+            "POSIX_RW_SWITCHES": "number of times access alternated between read and write.",
+            "POSIX_*_ALIGNMENT": "memory and file alignment.",
+            "POSIX_*_NOT_ALIGNED": "number of reads and writes that were misaligned.",
+            "POSIX_MAX_*_TIME_SIZE": "size of the slowest read and write operations.",
+            "POSIX_SIZE_*_*": "histogram of read and write access sizes.",
+            "POSIX_STRIDE*_STRIDE": "the four most common strides detected.",
+            "POSIX_STRIDE*_COUNT": "count of the four most common strides.",
+            "POSIX_ACCESS*_ACCESS": "the four most common access sizes.",
+            "POSIX_ACCESS*_COUNT": "count of the four most common access sizes.",
+            "POSIX_*_RANK": "rank of the processes that were the fastest and slowest at I/O (for shared files).",
+            "POSIX_*_RANK_BYTES": "bytes transferred by the fastest and slowest ranks (for shared files).",
+            "POSIX_F_*_START_TIMESTAMP": "timestamp of first open/read/write/close.",
+            "POSIX_F_*_END_TIMESTAMP": "timestamp of last open/read/write/close.",
+            "POSIX_F_READ/WRITE/META_TIME": "cumulative time spent in read, write, or metadata operations.",
+            "POSIX_F_MAX_*_TIME": "duration of the slowest read and write operations.",
+            "POSIX_F_*_RANK_TIME": "fastest and slowest I/O time for a single rank (for shared files).",
+            "POSIX_F_VARIANCE_RANK_*": "variance of total I/O time and bytes moved for all ranks (for shared files).",
+        },
+        "warnings": "POSIX_OPENS counter includes both POSIX_FILENOS and POSIX_DUPS counts. POSIX counters related to file offsets may be incorrect if a file is simultaneously accessed by both POSIX and STDIO (e.g., using fileno()). Affected counters include: MAX_BYTE_{READ|WRITTEN}, CONSEC_{READS|WRITES}, SEQ_{READS|WRITES}, {MEM|FILE}_NOT_ALIGNED, STRIDE*_STRIDE."
+    },
+    "MPI-IO": {
+        "column_description": {
+            "module": "module responsible for this I/O record.",
+            "rank": "MPI rank. -1 indicates that the file is shared across all processes and statistics are aggregated.",
+            "record id": "hash of the record's file path",
+            "file name": "full file path for the record.",
+            "mount pt": "mount point that the file resides on.",
+            "fs type": "type of file system that the file resides on.",
+            "MPIIO_INDEP_*": "MPI independent operation counts.",
+            "MPIIO_COLL_*": "MPI collective operation counts.",
+            "MPIIO_SPLIT_*": "MPI split collective operation counts.",
+            "MPIIO_NB_*": "MPI non-blocking operation counts.",
+            "READS,WRITES,OPENS": "types of operations at MPI-IO layer.",
+            "MPIIO_SYNCS": "MPI file sync operation counts.",
+            "MPIIO_HINTS": "number of times MPI hints were used.",
+            "MPIIO_VIEWS": "number of times MPI file views were used.",
+            "MPIIO_MODE": "MPI-IO access mode that file was opened with.",
+            "MPIIO_BYTES_*": "total bytes read and written at MPI-IO layer.",
+            "MPIIO_RW_SWITCHES": "number of times access alternated between read and write at MPI-IO layer.",
+            "MPIIO_MAX_*_TIME_SIZE": "size of the slowest read and write operations at MPI-IO layer.",
+            "MPIIO_SIZE_*_AGG_*": "histogram of MPI datatype total sizes for read and write operations.",
+            "MPIIO_ACCESS*_ACCESS": "the four most common total access sizes at MPI-IO layer.",
+            "MPIIO_ACCESS*_COUNT": "count of the four most common total access sizes.",
+            "MPIIO_*_RANK": "rank of the processes that were the fastest and slowest at I/O (for shared files) at MPI-IO layer.",
+            "MPIIO_*_RANK_BYTES": "total bytes transferred at MPI-IO layer by the fastest and slowest ranks (for shared files).",
+            "MPIIO_F_*_START_TIMESTAMP": "timestamp of first MPI-IO open/read/write/close.",
+            "MPIIO_F_*_END_TIMESTAMP": "timestamp of last MPI-IO open/read/write/close.",
+            "MPIIO_F_READ/WRITE/META_TIME": "cumulative time spent in MPI-IO read, write, or metadata operations.",
+            "MPIIO_F_MAX_*_TIME": "duration of the slowest MPI-IO read and write operations.",
+            "MPIIO_F_*_RANK_TIME": "fastest and slowest I/O time for a single rank (for shared files) at MPI-IO layer.",
+            "MPIIO_F_VARIANCE_RANK_*": "variance of total I/O time and bytes moved for all ranks (for shared files) at MPI-IO layer."
+        },
+
+    },
+    "HDF5": {
+        "column_description": {
+            "module": "module responsible for this I/O record.",
+            "rank": "MPI rank. -1 indicates that the file is shared across all processes and statistics are aggregated.",
+            "record id": "hash of the record's file path",
+            "file name": "full file path for the record.",
+            "mount pt": "mount point that the file resides on.",
+            "fs type": "type of file system that the file resides on.",
+            "H5F_OPENS": "HDF5 file open/create operation counts.",
+            "H5F_FLUSHES": "HDF5 file flush operation counts.",
+            "H5F_USE_MPIIO": "flag indicating whether MPI-IO was used to access this file.",
+            "H5F_F_*_START_TIMESTAMP": "timestamp of first HDF5 file open/close.",
+            "H5F_F_*_END_TIMESTAMP": "timestamp of last HDF5 file open/close.",
+            "H5F_F_META_TIME": "cumulative time spent in HDF5 metadata operations."
+        }
+    },
+    "BGQ": {
+        "column_description": {
+            "module": "module responsible for this I/O record.",
+            "rank": "MPI rank. -1 indicates that the file is shared across all processes and statistics are aggregated.",
+            "record id": "hash of the record's file path",
+            "file name": "full file path for the record.",
+            "mount pt": "mount point that the file resides on.",
+            "fs type": "type of file system that the file resides on.",
+            "BGQ_CSJOBID": "BGQ control system job ID.",
+            "BGQ_NNODES": "number of BGQ compute nodes for this job.",
+            "BGQ_RANKSPERNODE": "number of MPI ranks per compute node.",
+            "BGQ_DDRPERNODE": "size in MB of DDR3 per compute node.",
+            "BGQ_INODES": "number of BGQ I/O nodes for this job.",
+            "BGQ_*NODES": "dimension of A, B, C, D, & E dimensions of torus.",
+            "BGQ_TORUSENABLED": "which dimensions of the torus are enabled.",
+            "BGQ_F_TIMESTAMP": "timestamp when the BGQ data was collected."
+        }
+    },
+    "STDIO": {
+        "column_description": {
+            "module": "module responsible for this I/O record.",
+            "rank": "MPI rank. -1 indicates that the file is shared across all processes and statistics are aggregated.",
+            "record id": "hash of the record's file path",
+            "file name": "full file path for the record.",
+            "mount pt": "mount point that the file resides on.",
+            "fs type": "type of file system that the file resides on.",
+            "STDIO_*": "STDIO operation counts. Possible operations include: OPENS, FDOPENS, WRITES, READS, SEEKS, FLUSHES",
+            "STDIO_BYTES_*": "total bytes read and written.",
+            "STDIO_MAX_BYTE_*": "highest offset byte read and written.",
+            "STDIO_*_RANK": "rank of the processes that were the fastest and slowest at I/O (for shared files).",
+            "STDIO_*_RANK_BYTES": "bytes transferred by the fastest and slowest ranks (for shared files).",
+            "STDIO_F_*_START_TIMESTAMP": "timestamp of the first call to that type of function.",
+            "STDIO_F_*_END_TIMESTAMP": "timestamp of the completion of the last call to that type of function.",
+            "STDIO_F_*_TIME": "cumulative time spent in different types of functions.",
+            "STDIO_F_*_RANK_TIME": "fastest and slowest I/O time for a single rank (for shared files).",
+            "STDIO_F_VARIANCE_RANK_*": "variance of total I/O time and bytes moved for all ranks (for shared files)."
+        }
+    },
+    "LUSTRE": {
+        "column_description": {
+            "module": "module responsible for this I/O record.",
+            "rank": "MPI rank. -1 indicates that the file is shared across all processes and statistics are aggregated.",
+            "record id": "hash of the record's file path",
+            "file name": "full file path for the record.",
+            "mount pt": "mount point that the file resides on.",
+            "fs type": "type of file system that the file resides on.",
+            "LUSTRE_OSTS": "number of OSTs (Object Storage Targets) across the entire file system.",
+            "LUSTRE_MDTS": "number of MDTs (Metadata Targets) across the entire file system.",
+            "LUSTRE_STRIPE_OFFSET": "OST ID offset specified when the file was created.",
+            "LUSTRE_STRIPE_SIZE": "stripe size for the file in bytes.",
+            "LUSTRE_STRIPE_WIDTH": "number of OSTs over which the file is striped.",
+            "LUSTRE_OST_ID_*": "indices of OSTs over which the file is striped."
+        }
+    },
+    "DXT": {
+        "column_description": {
+            "module": "module responsible for this I/O record.",
+            "rank": "MPI rank. -1 indicates that the file is shared across all processes and statistics are aggregated.",
+            "record id": "hash of the record's file path",
+            "file name": "full file path for the record.",
+            "mount pt": "mount point that the file resides on.",
+            "fs type": "type of file system that the file resides on.",
+            "file_id": "unique ID assigned to each file",
+            "file_name": "Path and name of the file",
+            "api": "I/O library being used",
+            "rank": "MPI rank from which the operation was called",
+            "operation": "type of I/O call ('read', 'write', 'open', 'stat')",
+            "segment": "portion of a file that is accessed during an I/O operation",
+            "offset": "position within a file where a particular I/O operation begins",
+            "size": "amount of data read from or written to a file during an I/O operation in bytes",
+            "start": "unix timestamp of the start of the I/O operation",
+            "end": "unix timestamp of the end of the I/O operation",
+            "ost": "lustre OST used by the I/O operation",
+            "consec": "boolean to indicate if current offset is greater than the previous offset+size",
+            "seq": "boolean to indicate if current offset is equal to the previous offset + size"
+        }
+    },
+    "MDHIM": {
+        "column_description": {
+            "module": "module responsible for this I/O record.",
+            "rank": "MPI rank. -1 indicates that the file is shared across all processes and statistics are aggregated.",
+            "record id": "hash of the record's file path",
+            "file name": "full file path for the record.",
+            "mount pt": "mount point that the file resides on.",
+            "fs type": "type of file system that the file resides on.",
+            "MDHIM_PUTS": "number of 'mdhim_put' function calls.",
+            "MDHIM_GETS": "number of 'mdhim_get' function calls.",
+            "MDHIM_SERVERS": "how many mdhim servers were utilized.",
+            "MDHIM_F_PUT_TIMESTAMP": "timestamp of the first call to function 'mdhim_put'.",
+            "MDHIM_F_GET_TIMESTAMP": "timestamp of the first call to function 'mdhim_get'.",
+            "MDHIM_SERVER_N": "how many operations were sent to this server."
+        }
+    },
+    "NULL": {
+        "column_description": {
+            "module": "module responsible for this I/O record.",
+            "rank": "MPI rank. -1 indicates that the file is shared across all processes and statistics are aggregated.",
+            "record id": "hash of the record's file path",
+            "file name": "full file path for the record.",
+            "mount pt": "mount point that the file resides on.",
+            "fs type": "type of file system that the file resides on.",
+            "NULL_FOOS": "number of 'foo' function calls.",
+            "NULL_FOO_MAX_DAT": "maximum data value set by calls to 'foo'.",
+            "NULL_F_FOO_TIMESTAMP": "timestamp of the first call to function 'foo'.",
+            "NULL_F_FOO_MAX_DURATION": "timer indicating duration of call to 'foo' with max NULL_FOO_MAX_DAT value."
+        }
+
+    },
+    "PNETCDF": {
+        "column_description": {
+            "module": "module responsible for this I/O record.",
+            "rank": "MPI rank. -1 indicates that the file is shared across all processes and statistics are aggregated.",
+            "record id": "hash of the record's file path",
+            "file name": "full file path for the record.",
+            "mount pt": "mount point that the file resides on.",
+            "fs type": "type of file system that the file resides on.",
+            "PNETCDF_VAR_OPENS": "PnetCDF variable define/inquire operation counts.",
+            "PNETCDF_VAR_INDEP_READS": "PnetCDF variable independent read operation counts.",
+            "PNETCDF_VAR_INDEP_WRITES": "PnetCDF variable independent write operation counts.",
+            "PNETCDF_VAR_COLL_READS": "PnetCDF variable collective read operation counts.",
+            "PNETCDF_VAR_COLL_WRITES": "PnetCDF variable collective write operation counts.",
+            "PNETCDF_VAR_NB_READS": "PnetCDF variable nonblocking read operation counts.",
+            "PNETCDF_VAR_NB_WRITES": "PnetCDF variable nonblocking write operation counts.",
+            "PNETCDF_VAR_BYTES_*": "total bytes read and written at PnetCDF variable layer.",
+            "PNETCDF_VAR_RW_SWITCHES": "number of times access alternated between read and write at PnetCDF layer.",
+            "PNETCDF_VAR_PUT_VAR*": "number of calls to ncmpi_put_var* APIs (var, var1, vara, vars, varm, varn, vard).",
+            "PNETCDF_VAR_GET_VAR*": "number of calls to ncmpi_get_var* APIs (var, var1, vara, vars, varm, varn, vard).",
+            "PNETCDF_VAR_IPUT_VAR*": "number of calls to ncmpi_iput_var* APIs (var, var1, vara, vars, varm, varn).",
+            "PNETCDF_VAR_IGET_VAR*": "number of calls to ncmpi_iget_var* APIs (var, var1, vara, vars, varm, varn).",
+            "PNETCDF_VAR_BPUT_VAR*": "number of calls to ncmpi_bput_var* APIs (var, var1, vara, vars, varm, varn).",
+            "PNETCDF_VAR_MAX_*_TIME_SIZE": "size of the slowest read and write operations at PnetCDF layer.",
+            "PNETCDF_VAR_SIZE_*_AGG_*": "histogram of PnetCDF total access sizes for read and write operations.",
+            "PNETCDF_VAR_ACCESS*_*": "the four most common total accesses, in terms of size and length/stride (in last 5 dimensions) at PnetCDF layer.",
+            "PNETCDF_VAR_ACCESS*_COUNT": "count of the four most common total access sizes at PnetCDF layer.",
+            "PNETCDF_VAR_NDIMS": "number of dimensions in the variable.",
+            "PNETCDF_VAR_NPOINTS": "number of points in the variable.",
+            "PNETCDF_VAR_DATATYPE_SIZE": "size of each variable element at PnetCDF layer.",
+            "PNETCDF_VAR_*_RANK": "rank of the processes that were the fastest and slowest at I/O (for shared datasets) at PnetCDF layer.",
+            "PNETCDF_VAR_*_RANK_BYTES": "total bytes transferred at PnetCDF layer by the fastest and slowest ranks (for shared datasets).",
+            "PNETCDF_VAR_F_*_START_TIMESTAMP": "timestamp of first PnetCDF variable open/read/write/close.",
+            "PNETCDF_VAR_F_*_END_TIMESTAMP": "timestamp of last PnetCDF variable open/read/write/close.",
+            "PNETCDF_VAR_F_READ/WRITE/META_TIME": "cumulative time spent in PnetCDF read, write, or metadata operations.",
+            "PNETCDF_VAR_F_MAX_*_TIME": "duration of the slowest PnetCDF read and write operations.",
+            "PNETCDF_VAR_F_*_RANK_TIME": "fastest and slowest I/O time for a single rank (for shared datasets) at PnetCDF layer.",
+            "PNETCDF_VAR_F_VARIANCE_RANK_*": "variance of total I/O time and bytes moved for all ranks (for shared datasets) at PnetCDF layer.",
+            "PNETCDF_VAR_FILE_REC_ID": "Darshan file record ID of the file the variable belongs to."
+        }
+    },
+
+    "HEATMAP": {
+        "column_description": {
+            "module": "module responsible for this I/O record.",
+            "rank": "MPI rank. -1 indicates that the file is shared across all processes and statistics are aggregated.",
+            "record id": "hash of the record's file path",
+            "file name": "full file path for the record.",
+            "mount pt": "mount point that the file resides on.",
+            "fs type": "type of file system that the file resides on.",
+            "HEATMAP_F_BIN_WIDTH_SECONDS": "time duration of each heatmap bin.",
+            "HEATMAP_READ_BIN_*": "number of bytes read within specified heatmap bin.",
+            "HEATMAP_WRITE_BIN_*": "number of bytes written within specified heatmap bin."
+        }
+    },
+}
