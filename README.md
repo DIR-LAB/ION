@@ -1,3 +1,3 @@
 # ION
 
-Prompts.py includes the prompts.
+Prompts.py includes the prompts used by the ION Analyzer.
